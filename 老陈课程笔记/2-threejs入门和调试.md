@@ -180,6 +180,8 @@ public的资源使用./访问
 
 hdr需要设置球形映射,否者就作为平面背景
 
+物体材质如果不设置环境贴图,就会以场景的环境贴图反射
+
 ![image-20240228142336963](img/image-20240228142336963.png)
 
 ![image-20240228142346993](img/image-20240228142346993.png)
@@ -210,11 +212,13 @@ hdr需要设置球形映射,否者就作为平面背景
 
 ![image-20240228142548178](img/image-20240228142548178.png)
 
-THREE.SRGBColorSpace
+THREE.SRGBColorSpace(贴图需要改为这个)
 
 提供了更多的颜色级别
 
 按人眼强度计算
+
+
 
 THREE.LinearSRGColorSpace(默认)
 
