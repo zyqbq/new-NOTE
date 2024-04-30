@@ -5,13 +5,37 @@ const axesHelper = new THREE.AxesHelper(5):
 scene.add (axesHelper);
 ```
 
+x轴向右
+
+y轴向上
+
+z轴向外
+
 ### 轨道控制器
+
+监听的dom是可以换成普通元素的
+
+![image-20240329023724183](img/image-20240329023724183.png)
 
 ![image-20240228140448897](img/image-20240228140448897.png)
 
 ![image-20240228140458417](img/image-20240228140458417.png)
 
+### position
+
+局部坐标 如果父元素是场景 就是全局坐标
+
+全局坐标需要加上父元素的坐标 
+
+### 父子模型的关系
+
+> 父元素的旋转缩放平移都会带动子元素一起变化
+
 ### 物体位移
+
+物体移动
+
+如果父元素旋转 会改变子元素的移动轴
 
 ```js
 cube.position.x = 2;
@@ -20,21 +44,25 @@ cube.position.set(3, 0, 0);
 
 ### 缩放
 
+局部的缩放
+
 ```js
 cube.scale.set(2,2, 2);
 ```
 
 ### 旋转
 
+局部旋转
+
 旋转会改变欧拉角的值,并且自身的坐标系会跟随旋转
+
+默认顺序是xyz
+
+pi是180度
 
 ```js
 cube.rotation.x = Math.PI / 4:
 ```
-
-### 父子模型的关系
-
-> 父元素的旋转缩放平移都会带动子元素一起变化
 
 ### 画布大小自适应
 
@@ -45,7 +73,7 @@ window.addEventListener("resize"，0 =>{
 renderer.setSize(window.innerWidth, window.innerHeight).
 // 重置相机宽高比
 camera.aspect = window.innerWidth / window.innerHeight
-// 更新相机投影矩阵
+// 更新相机投影矩阵(相机宽高比例变化了)
 camera.updateProjectionMatrix();
 });
 ```
@@ -54,94 +82,69 @@ camera.updateProjectionMatrix();
 
 ```js
 document.body.requestFullscreen0://全屏
-document.exitFullscreen0;// 退出全屏
+document.exitFullscreen0;// 退出全屏 
 ```
 
-### gui使用
+## gui使用
 
 ```js
 // 导入lil.gui
 import { GUl ) from "three/examples/jsm/libs/lil-qui.module.min.is";
 ```
 
-使用方法
-
-> 如果属性值是布尔值,就是勾选框
-> gui.add(对象,属性).min(最小值).max(最大值).step(每步变化
-> 值).name("这个滑块名称").onChange((val) => [
-> 每次值变化执行打印这个值
-> console.log(val);
-> ).onFinishChange((val) => (
-> 值拖动完才打印
-> console.log("立方体y轴位置"，val);
-> 1)
-
 全屏和退出全屏按钮
 
+![image-20240329031254617](img/image-20240329031254617.png)
 
+滑块
 
-```js
-let eventObj = {
-	Fullscreen: function (){
-	// 全屏
-	document.body.requestFullscreen()
-	console.log("全屏");
-},
-ExitFullscreen: function (){
-	document.exitFullscreen();
-	console.log("退出全屏")
-	},
- }:
-// 创建GUI
-const gui = new GUl():
-// 添加按钮
-gui.add(eventObj"Fullscreen").name("全屏")
-gui.add(eventObj,"ExitFullscreen").name("退出全屏");
-```
+![image-20240329031938560](img/image-20240329031938560.png)
 
-范围滑块
-
-```js
-gui.add(cube.position,"x"，-5,5).name("立方体x轴位置");
-```
-
-折叠块
-
-![image-20240228141408412](img/image-20240228141408412.png)
+![image-20240329032050384](img/image-20240329032050384.png)
 
 颜色
+
+![image-20240329032710463](img/image-20240329032710463.png)
 
 ![image-20240228141431365](img/image-20240228141431365.png)
 
 勾选框
 
-线框模式
-
-![image-20240228141459461](img/image-20240228141459461.png)
-
-![image-20240228141508472](img/image-20240228141508472.png)
+![image-20240329032544052](img/image-20240329032544052.png)
 
 ### 自定义创建三角形
 
+![image-20240329033820234](img/image-20240329033820234.png)
+
+
+
 逆时针为正面
 
-![image-20240228141533729](img/image-20240228141533729.png)
+Float32Array 32位的浮点数数组
+
+索引创建平面 节省2个点
+
+![image-20240329034658711](img/image-20240329034658711.png)
 
 ![image-20240228141545590](img/image-20240228141545590.png)
 
-### 使用索引绘制2个三角形
 
-通过索引设置点的顺序
-
-![image-20240228141607257](img/image-20240228141607257.png)
 
 给一个物体的两个平面分别设置不同材质
 
-![image-20240228141636869](img/image-20240228141636869.png)
+点划分组999
+
+![image-20240329035258625](img/image-20240329035258625.png)
+
+
 
 给立方体每个面设置不同材质
 
-![image-20240228141652709](img/image-20240228141652709.png)
+![image-20240329035356228](img/image-20240329035356228.png)
+
+立方体的顶点组
+
+![image-20240329035630936](img/image-20240329035630936.png)
 
 ## 材质
 
@@ -178,9 +181,9 @@ public的资源使用./访问
 
 物体会反射贴图中的画面
 
-hdr需要设置球形映射,否者就作为平面背景
+hdr图需要设置为球形映射,否则就作为平面背景
 
-物体材质如果不设置环境贴图,就会以场景的环境贴图反射
+?物体材质如果不设置环境贴图,就会以场景的环境贴图反射
 
 ![image-20240228142336963](img/image-20240228142336963.png)
 
@@ -210,6 +213,10 @@ hdr需要设置球形映射,否者就作为平面背景
 
 ### 色彩空间
 
+webGLRenderer默认是SRGB
+
+![image-20240408200134243](img/image-20240408200134243.png)
+
 ![image-20240228142548178](img/image-20240228142548178.png)
 
 THREE.SRGBColorSpace(贴图需要改为这个)
@@ -220,13 +227,13 @@ THREE.SRGBColorSpace(贴图需要改为这个)
 
 
 
-THREE.LinearSRGColorSpace(默认)
+THREE.LinearSRGColorSpace
 
 进行计算和处理时，可以提供更精确的结果,可能使颜色在暗区看着很暗
 
 按光照强度来计算
 
-THREE.NoColorSpace按线性空间设置
+THREE.NoColorSpace按线性空间设置(默认)
 
 用于已经处于颜色空间中的纹理
 
@@ -256,9 +263,9 @@ gltf是json格式
 
 ![image-20240228142911147](img/image-20240228142911147.png)
 
-通过环境贴图给物体上色
+给环境设置贴图 标准网格材质没有环境贴图 会贴上环境设置的环境贴图
 
-标准网格材质也能上色
+标准网格材质就能上色
 
 ![image-20240228142936594](img/image-20240228142936594.png)
 
@@ -277,6 +284,8 @@ group对象是继承object3D对象的
 ### 射线拾取
 
 射线拾取的第一个物体就是距离最近的物体
+
+被检测的物体必须正面朝着射线
 
 ![image-20240228143200621](img/image-20240228143200621.png)
 

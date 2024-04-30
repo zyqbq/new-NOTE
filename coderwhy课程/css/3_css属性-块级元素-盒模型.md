@@ -4,7 +4,7 @@
 
 一般和文本字体相关的属性都具有继承性
 文档中会标注
-继承的是计算值 不是设置值 如em
+继承的是计算值(父元素计算而来的值) 不是设置值 如em
 
 ![image-20240301165136727](img/image-20240301165136727.png)
 
@@ -20,6 +20,8 @@
 权重可以累加
 
 ![image-20240301170646190](img/image-20240301170646190.png)
+
+继承的权重比直接选中要低
 
 ## display
 
@@ -136,6 +138,8 @@ border:10px solid red 顺序任意 style不能省略
 
 用来设置元素与元素之间的距离
 
+margin设置百分比是相对于包裹元素的
+
 ### margin和padding的使用场景
 
 父子元素的间距使用padding更合适
@@ -206,6 +210,20 @@ padding和border都设置在width和height的内部
 
 content+padding+border=width/height
 
+### white-space
+
+用于设置空格和tab 换行符(空白处理)和换行规则
+
+normal(默认值)空白合并为一个空格 超出宽度换行
+
+nowrap(常用) 空白合并为一个空格 单词超出不换行
+
+pre 阻止空白合并 不允许换行
+
+pre-wrap  阻止空格合并 允许换行
+
+pre-line 运行换行 合并连续空白 换行符(br)保留
+
 ### 省略号
 
 ![image-20240302230750736](img/image-20240302230750736.png)
@@ -239,6 +257,8 @@ contain:图片放大到宽度占满
 cover:图片较短的边放到到和容器一样 撑满
 
 ### background-position
+
+默认居中
 
  设置具体值表示距离上 左的偏移量
 
